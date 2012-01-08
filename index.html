@@ -16,11 +16,13 @@
 
 $(document).ready(function() {
   var datatable = $('#packlist').dataTable( {
-    'bPaginate': false
+    'bPaginate': false,
+    'bFilter' : false,
+    'oSearch' : { 'bRegex': true }
   });
 
   $("#search").keyup(function () {
-    datatable.fnFilter(this.value, 2);
+    datatable.fnFilter(this.value, 2, true, true);
   });
 
   var parseIrofferXML = function(xml) {
