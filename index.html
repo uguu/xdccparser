@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+<title>XDCC</title>
+<script type="text/javascript">
+
+var parseIrofferXML = function(xml) {
+  var packs = xml.getElementsByTagName('pack');
+
+  var table = document.getElementById('packlist');
+  for (i=0; i<packs.length; i++) {
+    var pack = packs[i];
+    var packnr = pack.getElementsByTagName('packnr')[0].childNodes[0].nodeValue;
+    var packname = pack.getElementsByTagName('packname')[0].childNodes[0].nodeValue;
+    var packsize = pack.getElementsByTagName('packsize')[0].childNodes[0].nodeValue;
+    table.innerHTML += "<tr><td>" + packnr + "</td><td>" + packname + '</td><td>' + packsize + '</td></tr>';
+  }
+
+  
+  t = xml.getElementsByTagName("packlist")[0].getElementsByTagName("packname")[0].nodeValue
+  t = xml;
+};
+
+var r = new XMLHttpRequest();
+r.open('GET', "drawn-reality.packlist.xml", true);
+r.onreadystatechange = function() {
+  if(r.readyState == 4) {
+    if(r.status != 200) {
+    	alert("Failed");
+    }
+    else {
+      parseIrofferXML(r.responseXML);
+    }
+  }
+
+};
+r.send(null);
+
+
+
+
+
+
+</script>
+
+
+</head>
+
+<body>
+
+<table id="packlist">
+  <tr><th>Pack Number</th><th>Name</th><th>Size</th></tr>
+</table>
+
+</body>
