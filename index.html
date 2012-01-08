@@ -3,39 +3,57 @@
 <html>
 <head>
 <title>XDCC</title>
+
+<style type="text/css">
+  @import "http://live.datatables.net/media/css/demo_page.css";
+  @import "http://live.datatables.net/media/css/demo_table.css";
+</style>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
+
 <script type="text/javascript">
 
-var parseIrofferXML = function(xml) {
-  var packs = xml.getElementsByTagName('pack');
+$(document).ready(function() {
+  var datatable = $('#packlist').dataTable( {
+    'bPaginate': false
+  });
 
-  var table = document.getElementById('packlist');
-  for (i=0; i<packs.length; i++) {
-    var pack = packs[i];
-    var packnr = pack.getElementsByTagName('packnr')[0].childNodes[0].nodeValue;
-    var packname = pack.getElementsByTagName('packname')[0].childNodes[0].nodeValue;
-    var packsize = pack.getElementsByTagName('packsize')[0].childNodes[0].nodeValue;
-    table.innerHTML += "<tr><td>" + packnr + "</td><td>" + packname + '</td><td>' + packsize + '</td></tr>';
-  }
+  $("#search").keyup(function () {
+    datatable.fnFilter(this.value, 2);
+  });
 
+  var parseIrofferXML = function(xml) {
+    var botnick = xml.getElementsByTagName('currentnick')[0].childNodes[0].nodeValue;
+
+    var packs = xml.getElementsByTagName('pack');
   
-  t = xml.getElementsByTagName("packlist")[0].getElementsByTagName("packname")[0].nodeValue
-  t = xml;
-};
+    for (i=0; i<packs.length; i++) {
+      var pack = packs[i];
 
-var r = new XMLHttpRequest();
-r.open('GET', "drawn-reality.packlist.xml", true);
-r.onreadystatechange = function() {
-  if(r.readyState == 4) {
-    if(r.status != 200) {
-    	alert("Failed");
-    }
-    else {
-      parseIrofferXML(r.responseXML);
-    }
-  }
+      var packnr = pack.getElementsByTagName('packnr')[0].childNodes[0].nodeValue;
+      var packname = pack.getElementsByTagName('packname')[0].childNodes[0].nodeValue;
+      var packsize = pack.getElementsByTagName('packsize')[0].childNodes[0].nodeValue;
+      var packmd5 = pack.getElementsByTagName('md5sum')[0].childNodes[0].nodeValue;
 
-};
-r.send(null);
+      datatable.fnAddData( [botnick, packnr, packname, packsize, packmd5] );
+    }
+  };
+
+
+  $.get('drawn-reality.packlist.xml', function(xml) {
+    parseIrofferXML(xml);
+  });
+
+});
+
+
+
+
+
+
+
+
 
 
 
@@ -49,8 +67,19 @@ r.send(null);
 
 <body>
 
+<input id="search" type="text" size="20"></input>
 <table id="packlist">
-  <tr><th>Pack Number</th><th>Name</th><th>Size</th></tr>
+  <thead>
+    <tr>
+      <th>Bot</th>
+      <th>Pack Number</th>
+      <th>Name</th>
+      <th>Size</th>
+      <th>MD5</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
 </table>
 
 </body>
