@@ -25,6 +25,14 @@ $(document).ready(function() {
     datatable.fnFilter(this.value, 2, true, true);
   });
 
+  $('#packlist tbody').click(function(event) {
+    var tr = event.target.parentNode;
+    
+    var str = '/msg ' + tr.childNodes[0].childNodes[0].nodeValue + ' XDCC SEND #' + tr.childNodes[1].childNodes[0].nodeValue;
+
+    window.prompt('Copy and paste this into your IRC client', str);
+  });
+
   var parseIrofferXML = function(xml) {
     var botnick = xml.getElementsByTagName('currentnick')[0].childNodes[0].nodeValue;
 
