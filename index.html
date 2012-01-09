@@ -13,14 +13,14 @@
 $(document).ready( function () {
   var datatable = $('#packlist').dataTable( {
     'bFilter' : true,
-	'sDom': 'lrt',
-	'bPaginate': false,
+    'sDom': 'lrt',
+    'bPaginate': false,
     'oSearch' : { 'bRegex': true },
   });
 
   $("#search").keyup(function () {
     datatable.fnFilter(this.value, 2, true, true);
-	datatable.fnAdjustColumnSizing();
+    datatable.fnAdjustColumnSizing();
   });
 
   $('#packlist tbody').click(function(event) {
@@ -49,9 +49,8 @@ $(document).ready( function () {
 
   $.get('drawn-reality.packlist.xml', function(xml) {
     parseIrofferXML(xml);
-	datatable.fnAdjustColumnSizing();
+    datatable.fnAdjustColumnSizing();
   });
-
 });
 
 </script>
