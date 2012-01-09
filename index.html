@@ -12,9 +12,15 @@
 
 $(document).ready( function () {
   var datatable = $('#packlist').dataTable( {
-    'bPaginate': false,
+    'bFilter' : true,
+	'sDom': 'lrt',
+	'bPaginate': false,
     'oSearch' : { 'bRegex': true },
-    'bInfo': false
+  });
+
+  $("#search").keyup(function () {
+    datatable.fnFilter(this.value, 2, true, true);
+	datatable.fnAdjustColumnSizing();
   });
 
   $('#packlist tbody').click(function(event) {
@@ -43,6 +49,7 @@ $(document).ready( function () {
 
   $.get('drawn-reality.packlist.xml', function(xml) {
     parseIrofferXML(xml);
+	datatable.fnAdjustColumnSizing();
   });
 
 });
@@ -63,4 +70,5 @@ $(document).ready( function () {
   <tbody>
   </tbody>
 </table>
+<input id="search" type="text" size="20"></input>
 </body>
