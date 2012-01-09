@@ -4,23 +4,20 @@
 <head>
 <title>XDCC</title>
 
-<style type="text/css">
-  @import "http://live.datatables.net/media/css/demo_page.css";
-  @import "http://live.datatables.net/media/css/demo_table.css";
-</style>
-
+<link rel="stylesheet" type="text/css" href="style.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
 <script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js"></script>
 
 <script type="text/javascript">
 
-$(document).ready(function() {
+$(document).ready( function () {
   var datatable = $('#packlist').dataTable( {
-    'bPaginate': false,
-    'bFilter' : false,
-    'oSearch' : { 'bRegex': true }
+	'bFilter' : false,
+	'bPaginate': false,
+	'bInfo': false,
+	'oSearch' : { 'bRegex': true }
   });
-
+  
   $("#search").keyup(function () {
     datatable.fnFilter(this.value, 2, true, true);
   });
@@ -28,19 +25,17 @@ $(document).ready(function() {
   $('#packlist tbody').click(function(event) {
     var tr = event.target.parentNode;
     
-    var str = '/msg ' + tr.childNodes[0].childNodes[0].nodeValue + ' XDCC SEND #' + tr.childNodes[1].childNodes[0].nodeValue;
+    var str = '/msg ' + tr.childNodes[0].childNodes[0].nodeValue + ' XDCC SEND ' + tr.childNodes[1].childNodes[0].nodeValue;
 
     window.prompt('Copy and paste this into your IRC client', str);
   });
 
   var parseIrofferXML = function(xml) {
     var botnick = xml.getElementsByTagName('currentnick')[0].childNodes[0].nodeValue;
-
     var packs = xml.getElementsByTagName('pack');
   
     for (i=0; i<packs.length; i++) {
       var pack = packs[i];
-
       var packnr = pack.getElementsByTagName('packnr')[0].childNodes[0].nodeValue;
       var packname = pack.getElementsByTagName('packname')[0].childNodes[0].nodeValue;
       var packsize = pack.getElementsByTagName('packsize')[0].childNodes[0].nodeValue;
@@ -57,27 +52,9 @@ $(document).ready(function() {
 
 });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 </script>
-
-
 </head>
-
 <body>
-
-<input id="search" type="text" size="20"></input>
 <table id="packlist">
   <thead>
     <tr>
@@ -91,5 +68,6 @@ $(document).ready(function() {
   <tbody>
   </tbody>
 </table>
-
+<input id="search" type="text" size="20"></input>
 </body>
+</html>
