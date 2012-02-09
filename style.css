@@ -4,25 +4,37 @@ html {
 }
 
 body {
-  background-color: #e3e3e3;
+  background-color: #c3c3c3;
   margin: 0px;
+}
+/*Fancy search box*/
+input#search {
+  position: fixed;
+  padding: 2px 26px 2px 2px;
+  top:10px;
+  right: 10px;
+  font-size: 140%;
+  background: white url('images/search.png') no-repeat center right;
+  border: 2px solid #ced0f0;
+  border-radius: 3px;
+  box-shadow: 0px 0px 0px 2px #000;
 }
 
 table {
   margin: 10px;
   clear: both;
   width: 80%;
-  border-collapse: collapse;
+  background: #ced0f0;
+  border-spacing: 0;
   table-layout: auto;
-  background-color: #ced0f0;
-  border-bottom: 3px solid #ced0f0;
-  border-left: 3px solid #ced0f0;
-  border-right: 3px solid #ced0f0;
   float: left;
+  border: 3px solid #ced0f0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0px 2px #000;
 }
 
 table thead th {
-  padding: 3px 20px 3px 10px;
+  padding: 3px 30px 3px 10px;
   border: 1px solid #ced0f0;
   font-weight: bold;
   cursor: pointer;
@@ -32,60 +44,63 @@ table thead th {
 table td {
   padding: 3px 10px;
   text-align: left;
-  border-left: 1px solid #ced0f0;
   border-right: 1px solid #ced0f0;
-}
-
-input#search {
-  position: fixed;
-  padding: 2px 20px 2px 2px;
-  top:10px;
-  right: 10px;
-  font-size: 140%;
-  background: white url('search.png') no-repeat center right;
-  border: 2px solid #ced0f0;
-}
-
-.sorting_asc {
-  background: url('asc_sel.png') no-repeat center right;
-}
-
-.sorting_desc {
-  background: url('desc_sel.png') no-repeat center right;
-}
-
-.sorting {
-  background: url('unsel.png') no-repeat center right;
-}
-
-.sorting_asc_disabled {
-  background: url('sort_asc_disabled.png') no-repeat center right;
-}
-
-.sorting_desc_disabled {
-  background: url('sort_desc_disabled.png') no-repeat center right;
+  border-left: 1px solid #ced0f0;
 }
 
 tr.odd {
-  background-color: #E2E4FF;
+  background: #E2E4FF;
 }
 
 tr.even {
-  background-color: white;
+  background: white;
 }
 
 tr.odd td.sorting_1 {
-  background-color: #D3D6FF;
+  background: #D3D6FF;
 }
 
 tr.even td.sorting_1 {
-  background-color: #EAEBFF;
+  background: #EAEBFF;
 }
 
+tr:last-child {
+  border-bottom-width: 2px;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius: 3px;
+}
+
+tr:last-child td:last-child {
+  border-bottom-right-radius: 3px;
+}
+
+/*Hover effects*/
 tr:hover {
-  background-color: #ced0f0;
+  background: #ced0f0;
 }
 
 tr:hover td.sorting_1 {
-  background-color: #ced0f0;
+  background: #ced0f0;
+}
+/*Images for displaying the sort directions*/
+.sorting_asc {
+  background: url('images/asc_sel.png') no-repeat center right;
+}
+
+.sorting_desc {
+  background: url('images/desc_sel.png') no-repeat center right;
+}
+
+.sorting {
+  background: url('images/unsel.png') no-repeat center right;
+}
+
+.sorting_asc_disabled {
+  background: url('images/sort_asc_disabled.png') no-repeat center right;
+}
+
+.sorting_desc_disabled {
+  background: url('images/sort_desc_disabled.png') no-repeat center right;
 }
