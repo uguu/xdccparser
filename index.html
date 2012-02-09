@@ -21,7 +21,14 @@ $(document).ready( function () {
 
   $("#search").keyup(function () {
     datatable.fnFilter(this.value, 2, true, true);
-    datatable.fnAdjustColumnSizing();
+   });
+  
+  $("#body").keydown(function(key) {
+    if ( key.keyCode >= 45 ) {
+      document.getElementById('search').focus();
+    } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
+      document.getElementById('search').blur();
+    }
   });
 
   $('#packlist tbody').click(function(event) {
@@ -56,7 +63,7 @@ $(document).ready( function () {
 
 </script>
 </head>
-<body>
+<body id="body">
 <table id="packlist">
   <thead>
     <tr>
