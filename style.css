@@ -104,3 +104,12 @@ tr:hover td.sorting_1 {
 .sorting_desc_disabled {
   background: url('images/sort_desc_disabled.png') no-repeat center right;
 }
+
+#JABASCIRPT {
+  background: #ff0000;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  font-size: 400%;
+}
