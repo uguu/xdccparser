@@ -15,6 +15,32 @@ body {
   width: 204px;
 }
 
+#info {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  width: 236px;
+}
+
+table#infotable {
+  clear: both;
+  background: #ced0f0;
+  border-spacing: 0;
+  table-layout: auto;
+  float: left;
+  border: 3px solid #ced0f0;
+  border-radius: 5px;
+  box-shadow: 0px 0px 0px 2px #000;
+}
+
+table#infotable thead {
+  display:none;
+}
+
+table#infotable th {
+  display:none;
+}
+
 input#searchbox {
   position: absolute;
   right: 0px;
@@ -45,7 +71,7 @@ table#packlisttable {
   box-shadow: 0px 0px 0px 2px #000;
 }
 
-table thead th {
+table#packlisttable thead th {
   padding: 3px 30px 3px 10px;
   border: 1px solid #ced0f0;
   font-weight: bold;
@@ -53,7 +79,7 @@ table thead th {
   *cursor: hand;
 }
 
-table td {
+table#packlisttable td {
   padding: 3px 10px;
   text-align: left;
   border-right: 1px solid #ced0f0;
@@ -78,6 +104,21 @@ tr.even td.sorting_1 {
 
 tr:last-child {
   border-bottom-width: 2px;
+}
+
+td:first-child {
+  border-left: none;
+  border-right: 1px solid #ced0f0;
+}
+
+td {
+  border-left: 1px solid #ced0f0;
+  border-right: 1px solid #ced0f0;
+}
+
+td:last-child {
+  border-left: 1px solid #ced0f0;
+  border-right: none;
 }
 
 tr:last-child td:first-child {
