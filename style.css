@@ -8,11 +8,18 @@ body {
   margin: 0px;
 }
 /*Fancy search box*/
-input#search {
+#search {
   position: fixed;
-  padding: 2px 26px 2px 2px;
-  top:10px;
+  top: 10px;
   right: 10px;
+  width: 204px;
+}
+
+input#searchbox {
+  position: absolute;
+  right: 0px;
+  width: 100%;
+  padding: 2px 26px 2px 2px;
   font-size: 140%;
   background: white url('images/search.png') no-repeat center right;
   border: 2px solid #ced0f0;
@@ -20,10 +27,15 @@ input#search {
   box-shadow: 0px 0px 0px 2px #000;
 }
 
-table {
-  margin: 10px;
+#packlist {
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-right: 259px;
+}
+
+table#packlisttable {
+  margin-bottom: 10px;
   clear: both;
-  width: 80%;
   background: #ced0f0;
   border-spacing: 0;
   table-layout: auto;

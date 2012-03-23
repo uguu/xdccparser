@@ -12,48 +12,49 @@
 <script type="text/javascript">
 
 $(document).ready( function () {
-  var datatable = $('#packlist').dataTable( {
+  var datatable = $('#packlisttable').dataTable( {
     'bFilter' : true,
     'sDom': 'lrt',
     'bPaginate': false,
     'oSearch' : { 'bRegex': true },
   });
 
-  $("#search").keyup(function () {
+  $("#searchbox").keyup(function () {
     datatable.fnFilter(this.value, 2, true, true);
    });
   
   $("#body").keydown(function(key) {
     if ( key.keyCode >= 45 ) {
-      document.getElementById('search').focus();
+      document.getElementById('searchbox').focus();
     } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
-      document.getElementById('search').blur();
+      document.getElementById('searchbox').blur();
     }
   });
 
-  $('#packlist tbody').click(function(event) {
+  $('#packlisttable tbody').click(function(event) {
     var tr = event.target.parentNode;
     
-    var str = '/msg ' + tr.childNodes[0].childNodes[0].nodeValue + ' XDCC SEND ' + tr.childNodes[1].childNodes[0].nodeValue;
+    var str = '/msg ' + botnick + ' XDCC SEND ' + tr.childNodes[0].childNodes[0].nodeValue;
 
     window.prompt('Copy and paste this into your IRC client', str);
   });
-
+  var botnick; //scope etc
   var parseIrofferXML = function(xml) {
-    var botnick = xml.getElementsByTagName('currentnick')[0].childNodes[0].nodeValue;
+    botnick = xml.getElementsByTagName('currentnick')[0].childNodes[0].nodeValue;
     var packs = xml.getElementsByTagName('pack');
   
     for (i=0; i<packs.length; i++) {
       var pack = packs[i];
       var packnr = pack.getElementsByTagName('packnr')[0].childNodes[0].nodeValue;
+      var packgets = pack.getElementsByTagName('packgets')[0].childNodes[0].nodeValue;
       var packname = pack.getElementsByTagName('packname')[0].childNodes[0].nodeValue;
-      var packsize = pack.getElementsByTagName('packsize')[0].childNodes[0].nodeValue;
-      var packmd5 = pack.getElementsByTagName('md5sum')[0].childNodes[0].nodeValue;
+      var packbytes = pack.getElementsByTagName('packbytes')[0].childNodes[0].nodeValue;
+      var groupname = pack.getElementsByTagName('groupname')[0].childNodes[0].nodeValue;
+      //var packmd5 = pack.getElementsByTagName('md5sum')[0].childNodes[0].nodeValue;
 
-      datatable.fnAddData( [botnick, packnr, packname, packsize, packmd5] );
+      datatable.fnAddData( [/*botnick,*/packnr, packgets, packname, packbytes, groupname] );
     }
   };
-
 
   $.get('drawn-reality.packlist.xml', function(xml) {
     parseIrofferXML(xml);
@@ -64,20 +65,24 @@ $(document).ready( function () {
 </script>
 </head>
 <body id="body">
-<table id="packlist">
-  <thead>
-    <tr>
-      <th>Bot</th>
-      <th>Pack Number</th>
-      <th>Name</th>
-      <th>Size</th>
-      <th>MD5</th>
-    </tr>
-  </thead>
-  <tbody>
-  </tbody>
-</table>
-<input id="search" type="text" size="20"></input>
+<div id="packlist">
+  <table id="packlisttable" width="100%">
+    <thead>
+      <tr>
+        <th>Pack</th>
+        <th>Gets</th>
+        <th>Name</th>
+        <th>Size (bytes)</th>
+        <th>Group</th>
+      </tr>
+    </thead>
+    <tbody>
+    </tbody>
+  </table>
+</div>
+<div id="search">
+  <input id="searchbox" type="text" />
+</div>
 <noscript>
 <div id="JABASCIRPT">
   YO DAWG YOU GOTS TO ENABLE TEH JABASCIRPT
