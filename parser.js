@@ -17,20 +17,19 @@ $(document).ready( function () {
     datatable.fnFilter(this.value, 2, true, true);
    });
   
-  // $("#body").keydown(function(key) {
-  //   if ( key.keyCode >= 45 ) {
-  //     $("#searchbox").focus();
-  //   } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
-  //     $("#searchbox").blur();
-  //   }
-  // });
+  $("#body").keydown(function(key) {
+    if ( key.keyCode >= 45 ) {
+      $("#searchbox").focus();
+    } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
+      $("#searchbox").blur();
+    }
+  });
 
+  var botnick;
   $('#packlisttable tbody').click(function(event) {
-    var tr = event.target.parentNode;
-    
-    var str = '/msg ' + botnick + ' XDCC SEND ' + tr.childNodes[0].childNodes[0].nodeValue;
-
-    window.prompt('Copy and paste this into your IRC client', str);
+    var num = event.target.parentNode.childNodes[0].childNodes[0].nodeValue;
+    var str = '/msg ' + botnick + ' XDCC SEND ' + num
+    window.prompt('Copy and paste this into your IRC client',str);
   });
 
   var handlePacks = function(packs) {
@@ -42,6 +41,7 @@ $(document).ready( function () {
 
   $.getJSON('d-r.packlist.json', function(botlist) {
     handlePacks(botlist.packs);
+    botnick = botlist.nick;
     datatable.fnAdjustColumnSizing();
     infotable.fnAdjustColumnSizing();
   });
