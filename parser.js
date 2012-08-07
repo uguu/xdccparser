@@ -19,9 +19,9 @@ $(document).ready( function () {
   
   $("#body").keydown(function(key) {
     if ( key.keyCode >= 45 ) {
-      document.getElementById('searchbox').focus();
+      $("#searchbox").focus();
     } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
-      document.getElementById('searchbox').blur();
+      $("#searchbox").blur();
     }
   });
 
@@ -32,49 +32,16 @@ $(document).ready( function () {
 
     window.prompt('Copy and paste this into your IRC client', str);
   });
-  var botnick; //scope etc
-  var parseIrofferXML = function(xml) {
-    botnick = xml.getElementsByTagName('currentnick')[0].childNodes[0].nodeValue;
-    var packs = xml.getElementsByTagName('pack');
-  
+
+  var handlePacks = function(packs) {
     for (i=0; i<packs.length; i++) {
       var pack = packs[i];
-      var packnr = pack.getElementsByTagName('packnr')[0].childNodes[0].nodeValue;
-      var packgets = pack.getElementsByTagName('packgets')[0].childNodes[0].nodeValue;
-      var packname = pack.getElementsByTagName('packname')[0].childNodes[0].nodeValue;
-      var packbytes = pack.getElementsByTagName('packbytes')[0].childNodes[0].nodeValue;
-      var groupname = pack.getElementsByTagName('groupname')[0].childNodes[0].nodeValue;
-      //var packmd5 = pack.getElementsByTagName('md5sum')[0].childNodes[0].nodeValue;
-
-      datatable.fnAddData( [packnr, packgets, packname, packbytes, groupname] );
-    }
-  };
-
-  var parseInfoXML = function(xml) {
-    var data = new Array(0);
-    var name = new Array(0);
-    data.push(xml.getElementsByTagName('transferedtotal')[0].childNodes[0].nodeValue);
-    data.push(xml.getElementsByTagName('slotsfree')[0].childNodes[0].nodeValue + '/' + xml.getElementsByTagName('slotsmax')[0].childNodes[0].nodeValue);
-    data.push(xml.getElementsByTagName('queueuse')[0].childNodes[0].nodeValue + '/' + xml.getElementsByTagName('queuemax')[0].childNodes[0].nodeValue);
-    data.push(xml.getElementsByTagName('queueuse')[1].childNodes[0].nodeValue + '/' + xml.getElementsByTagName('queuemax')[1].childNodes[0].nodeValue);
-    data.push(xml.getElementsByTagName('banduse')[0].childNodes[0].nodeValue);
-    data.push(botnick);
-    data.push(xml.getElementsByTagName('uptime')[0].childNodes[0].nodeValue);
-    name.push('Transferred');
-    name.push('Free Slots');
-    name.push('Queue');
-    name.push('Idlequeue');
-    name.push('Curr. Bandwidth');
-    name.push('Nick');
-    name.push('Uptime');
-    for (i=0; i<data.length; i++) {
-      infotable.fnAddData( [name[i], data[i]] );
+      datatable.fnAddData( [i+1, pack.gets, pack.name, pack.size, pack.group] );
     }
   }
 
-  $.get('drawn-reality.packlist.xml', function(xml) {
-    parseIrofferXML(xml);
-    parseInfoXML(xml);
+  $.getJSON('http://sophie.drawn-reality.org/d-r.packlist.json', function(botlist) {
+    handlePacks(botlist.packs);
     datatable.fnAdjustColumnSizing();
     infotable.fnAdjustColumnSizing();
   });
