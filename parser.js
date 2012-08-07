@@ -17,13 +17,13 @@ $(document).ready( function () {
     datatable.fnFilter(this.value, 2, true, true);
    });
   
-  $("#body").keydown(function(key) {
-    if ( key.keyCode >= 45 ) {
-      $("#searchbox").focus();
-    } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
-      $("#searchbox").blur();
-    }
-  });
+  // $("#body").keydown(function(key) {
+  //   if ( key.keyCode >= 45 ) {
+  //     $("#searchbox").focus();
+  //   } else if ( ( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32 ) {
+  //     $("#searchbox").blur();
+  //   }
+  // });
 
   var botnick;
   $('#packlisttable tbody').click(function(event) {
