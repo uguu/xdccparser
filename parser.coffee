@@ -15,6 +15,7 @@ $(document).ready () ->
 
   $('#searchbox').keyup () ->
     datatable.fnFilter this.value, 2, true, true
+    datatable.fnAdjustColumnSizing()
   
   # $('body').keydown(function(key)
   #   if (key.keyCode >= 45)
@@ -23,34 +24,75 @@ $(document).ready () ->
   #     $('#searchbox').blur()
 
   $('#packlisttable tbody').click (event) ->
+    console.log event
     num = event.target.parentNode.childNodes[0].childNodes[0].nodeValue
-    botnick = event.target.parentNode.childNodes[0].childNodes[2].nodeValue
+    botnick = event.target.parentNode.childNodes[5].childNodes[0].nodeValue
     str = '/msg ' + botnick + ' XDCC SEND ' + num
     window.prompt 'Copy and paste this into your IRC client', str
 
   packlistArr = []
+  packHash = {}; infoHash = {}
+  revhash = {}
+
+  parsePacklist = () ->
+    total = packlistArr.length
+    success = 0; fail = 0; grabbed = 0
+    parseinfo = (json) ->
+      infotable.fnAddData()
+
+    parse = (bot, url) ->
+      packHash[url] = []
+      infoHash[url] = []
+      revhash[bot.nick] = url
+      for pack,i in bot.packs
+        packinfo = [i+1, pack.gets, pack.name, pack.size, pack.group, bot.nick]
+        datatable.fnAddData packinfo
+        packHash[url].push packinfo
+      infoHash[url].push ['Transferred','Slots','Queue','Idlequeue','Curr. Bandwidth','Uptime']
+      infoHash[url].push [
+        bot.transfer.total,
+        bot.slots.min+'/'+bot.slots.max,
+        bot.mainqueue.min+'/'+bot.mainqueue.max,
+        bot.idlequeue.min+'/'+bot.idlequeue.max,
+        bot.bandwidth.use,
+        bot.uptime.current
+      ]
+
+    fetch = (url, cb) ->
+      $.getJSON(url)
+      .always () ->
+        grabbed++
+        $('#processed').text i #no loop scope in JS
+      .done (json) ->
+        success++
+        $('#success').text success
+        cb json, url
+      .fail () ->
+        fail++
+        $('#fail').text fail
+
+    for bot,i in packlistArr
+      fetch bot, parse
+
+
   parseBotlist = (botlistArr) ->
-    grabbed = 0
+    grabbed = 0; success = 0; fail = 0
     tograb = botlistArr.length
-    success = 0
-    fail = 0
     fin = () ->
-      console.log tograb+'vs'+grabbed
       if(tograb == grabbed)
-        console.log packlistArr
-        console.log botlistArr
+        parsePacklist()
         #call the packlist parsing function
 
     parse = (json) ->
       console.log json
       newgrab = 0
-      for i in json
-        console.log i.type+':'+i.loc
-        switch i.type
+      for item in json
+        console.log item.type+':'+item.loc
+        switch item.type
           when "packlist"
-            packlistArr.push i.loc
+            packlistArr.push item.loc
           when "botlist"
-            botlistArr.push i
+            botlistArr.push item
             tograb++
             newgrab++
       for i in [0...newgrab]
@@ -75,3 +117,4 @@ $(document).ready () ->
       fetch botlistArr[i].loc, parse
 
   parseBotlist [{loc: 'botlist.json', type: 'botlist'}]
+  datatable.fnAdjustColumnSizing()
