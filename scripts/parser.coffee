@@ -4,7 +4,10 @@ $(document).ready () ->
     'sDom'      : 'lrt',
     'bPaginate' : false,
     'oSearch'   : { 'bRegex' : true }
+    'aaSorting' : [ [5,'asc'], [0,'asc'] ],
   }
+
+  new FixedHeader datatable
 
   infotable = $('#infotable').dataTable {
     'bFilter'   : false,
@@ -16,19 +19,6 @@ $(document).ready () ->
   $('#searchbox').keyup () ->
     datatable.fnFilter this.value, 2, true, true
     datatable.fnAdjustColumnSizing()
-  
-  # $('body').keydown(function(key)
-  #   if (key.keyCode >= 45)
-  #     $('#searchbox').focus()
-  #   else if (( key.keyCode < 8 || key.keyCode >18 ) && key.keyCode != 32)
-  #     $('#searchbox').blur()
-
-  $('#packlisttable tbody').click (event) ->
-    console.log event
-    num = event.target.parentNode.childNodes[0].childNodes[0].nodeValue
-    botnick = event.target.parentNode.childNodes[5].childNodes[0].nodeValue
-    str = '/msg ' + botnick + ' XDCC SEND ' + num
-    window.prompt 'Copy and paste this into your IRC client', str
 
   packlistArr = []
   packHash = {}; infoHash = {}

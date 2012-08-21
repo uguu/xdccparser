@@ -8,8 +8,10 @@ $(document).ready(function() {
     'bPaginate': false,
     'oSearch': {
       'bRegex': true
-    }
+    },
+    'aaSorting': [[5, 'asc'], [0, 'asc']]
   });
+  new FixedHeader(datatable);
   infotable = $('#infotable').dataTable({
     'bFilter': false,
     'sDom': 'lrt',
@@ -19,14 +21,6 @@ $(document).ready(function() {
   $('#searchbox').keyup(function() {
     datatable.fnFilter(this.value, 2, true, true);
     return datatable.fnAdjustColumnSizing();
-  });
-  $('#packlisttable tbody').click(function(event) {
-    var botnick, num, str;
-    console.log(event);
-    num = event.target.parentNode.childNodes[0].childNodes[0].nodeValue;
-    botnick = event.target.parentNode.childNodes[5].childNodes[0].nodeValue;
-    str = '/msg ' + botnick + ' XDCC SEND ' + num;
-    return window.prompt('Copy and paste this into your IRC client', str);
   });
   packlistArr = [];
   packHash = {};
