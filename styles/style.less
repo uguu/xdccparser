@@ -1,0 +1,130 @@
+@black: #000000;
+@hover: #444444;
+@darkg: #111111;
+@medg: #222222;
+@lightg: #333333;
+@white: #FFFFFF;
+
+html {
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 85%;
+}
+
+body {
+  background-color: @black;
+  margin: 0px;
+}
+
+#info {
+  position: fixed;
+  top: 50px;
+  right: 10px;
+  width: 236px;
+}
+
+#infotable {
+  clear: both;
+  background: #ced0f0;
+  border-spacing: 0;
+  table-layout: auto;
+  float: left;
+  thead, th { display:none; }
+}
+
+#search {
+  position: fixed;
+  background-color: white;
+  top: 10px;
+  right: 10px;
+  width: 235px;
+  #searchbox {
+    position: absolute;
+    width: 100%;
+    font-size: 140%;
+  }
+}
+
+#packlist {
+  margin-right: 260px;
+  height: 100%;
+  overflow: scroll;
+}
+
+#packlisttable {
+  color: @white;
+  clear: both;
+  background: @black;
+  table-layout: auto;
+  float: left;
+  td {
+    padding: 3px 10px;
+    text-align: left;
+    &:nth-child(1), &:nth-child(2), &:nth-child(4) { text-align: right; }
+    &:nth-child(5), &:nth-child(6) { text-align: center; }
+  }
+}
+
+table {
+  border-collapse: collapse;
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+thead th {
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  *cursor: hand;
+  background-color: black;
+  padding: 10px 10px 10px 10px;
+}
+
+tr {
+  &.odd {
+    background: @darkg;
+    td.sorting_1 { background: @medg; }
+  }
+  &.even {
+    background: @medg;
+    td.sorting_1 { background: @lightg; }
+  }
+  &:last-child {
+    border-bottom-width: 2px;
+  }
+  &:hover { background: @hover; }
+  &:hover td.sorting_1 { background: @hover; }
+}
+
+td {
+  border: 0;
+}
+/*Images for displaying the sort directions*/
+// .sorting_asc {
+//   background: #ffffff url('images/asc_sel.png') no-repeat center right;
+// }
+
+// .sorting_desc {
+//   background: url('images/desc_sel.png') no-repeat center right;
+// }
+
+// .sorting {
+//   background: url('images/unsel.png') no-repeat center right;
+// }
+
+// .sorting_asc_disabled {
+//   background: url('images/sort_asc_disabled.png') no-repeat center right;
+// }
+
+// .sorting_desc_disabled {
+//   background: url('images/sort_desc_disabled.png') no-repeat center right;
+// }
+
+#JABASCIRPT {
+  background: #ff0000;
+  color: #fff;
+  text-align: center;
+  width: 100%;
+  position: fixed;
+  font-size: 400%;
+}
