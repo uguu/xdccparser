@@ -9,51 +9,64 @@
 <script src="scripts/less.js" type="text/javascript"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
 <script class='jsbin' src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-<script class="jsbin" src="http://datatables.net/download/build/jquery.dataTables.nightly.js" type="text/javascript"></script>
+<script class="jsbin" src="scripts/dataTables.min.js" type="text/javascript"></script>
 <script src="scripts/FixedHeader.min.js" type="text/javascript"></script>
 <script src="scripts/parser.js" type="text/javascript"></script>
 <script src="scripts/interface.js" type="text/javascript"></script>
 
 </head>
 <body>
-<div id="packlist">
-  <table id="packlisttable" width="100%">
-    <thead>
-      <tr>
-        <th>Pack</th>
-        <th>Gets</th>
-        <th>Name</th>
-        <th>Size (bytes)</th>
-        <th>Group</th>
-        <th>Nick</th>
-      </tr>
-    </thead>
-    <tbody>
-    </tbody>
-  </table>
-</div>
-<div id="search">
-  <input id="searchbox" type="text" />
-</div>
-<div id="info">
-  <table id="infotable" width="100%">
-    <thead>
-      <tr>
-        <th>key</th>
-        <th>value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-      <th></th>
-      <th></th>
-      </tr>
-    </tbody>
-  </table>
-</div>
-<noscript>
-<div id="JABASCIRPT">
-  YO DAWG YOU GOTS TO ENABLE TEH JABASCIRPT
-</div>
-</noscript>
+  <div id="all">
+    <div id="packlist">
+      <table id="packlisttable" width="100%">
+        <thead>
+          <tr>
+            <th>Pack</th>
+            <th>Gets</th>
+            <th>Name</th>
+            <th>Size</th>
+            <th>Group</th>
+            <th>Bot</th>
+          </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+    <div id="sidebar">
+      <div id="search">
+        <input id="searchbox" type="text" />
+      </div>
+      <div id="lists">    
+        <h3 id="infoh" class="">Bot Info</h3>
+        <div id="info" class="content">
+          <table id="infotable" width="100%">
+            <thead>
+              <tr>
+                <th>key</th>
+                <th>value</th>
+              </tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+        <h3 id="botsh" class="head">Bots</h3>
+        <div id="bots" class="content">
+          <table id="bottable" width='100%'>
+            <thead>
+              <tr><th>bot</th></tr>
+            </thead>
+            <tbody>
+            </tbody>
+          </table>
+        </div>
+      </div>​
+    </div>
+    <noscript>
+    <div id="JABASCIRPT">
+      YO DAWG YOU GOTS TO ENABLE TEH JABASCIRPT
+    </div>
+    </noscript>
+  </div>
 </body>

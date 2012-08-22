@@ -8,6 +8,7 @@
 html {
   font-family: 'Droid Sans', sans-serif;
   font-size: 85%;
+  color: white;
 }
 
 body {
@@ -15,52 +16,64 @@ body {
   margin: 0px;
 }
 
-#info {
-  position: fixed;
-  top: 50px;
-  right: 10px;
-  width: 236px;
-}
-
-#infotable {
-  clear: both;
-  background: #ced0f0;
-  border-spacing: 0;
-  table-layout: auto;
+#sidebar {
   float: left;
-  thead, th { display:none; }
+  margin-left: -260px;
+  width: 260px;
+  // background: red;
 }
 
 #search {
-  position: fixed;
-  background-color: white;
-  top: 10px;
-  right: 10px;
-  width: 235px;
+  position: relative;
+  margin-top: 10px;
+  margin-left: 7px;
+  width: 245px;
+  z-index: 9001;
   #searchbox {
-    position: absolute;
     width: 100%;
+    box-sizing: border-box;
+    padding: 2px 2px 2px 2px;
     font-size: 140%;
   }
 }
 
+#lists {
+  position: relative;
+  margin-top: -3px;
+  margin-left: 7px;
+  height: 100%;
+  width: 245px;
+  h3 {
+    border-bottom: 1px solid white;
+  }
+}
+
+#info, #bots {
+  position: relative;
+  #infotable, #bottable {
+    border-spacing: 0;
+    table-layout: auto;
+    thead, th { display:none; }
+  }
+}
+
 #packlist {
+  float: left;
   margin-right: 260px;
   height: 100%;
   overflow: scroll;
-}
-
-#packlisttable {
-  color: @white;
-  clear: both;
-  background: @black;
-  table-layout: auto;
-  float: left;
-  td {
-    padding: 3px 10px;
-    text-align: left;
-    &:nth-child(1), &:nth-child(2), &:nth-child(4) { text-align: right; }
-    &:nth-child(5), &:nth-child(6) { text-align: center; }
+  #packlisttable {
+    color: @white;
+    clear: both;
+    background: @black;
+    table-layout: auto;
+    float: left;
+    td {
+      padding: 3px 10px;
+      text-align: left;
+      &:nth-child(1), &:nth-child(2), &:nth-child(4) { text-align: right; }
+      &:nth-child(5), &:nth-child(6) { text-align: center; }
+    }
   }
 }
 
@@ -78,6 +91,16 @@ thead th {
   *cursor: hand;
   background-color: black;
   padding: 10px 10px 10px 10px;
+  border-bottom: 1px solid white;
+}
+
+h3 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+  &.head {
+    cursor: pointer;
+    *cursor: hand;
+  }
 }
 
 tr {
