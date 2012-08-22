@@ -16,14 +16,15 @@ infotable = 0;
 bottable = 0;
 
 parsePacklist = function() {
-  var bot, fail, fetch, grabbed, i, parse, parseinfo, success, total, _i, _len, _results;
+  var bot, fail, fetch, fin, grabbed, i, parse, success, total, _i, _len, _results;
   total = packlistArr.length;
-  adjustUI(total);
   success = 0;
   fail = 0;
   grabbed = 0;
-  parseinfo = function(json) {
-    return infotable.fnAddData();
+  fin = function() {
+    if (total === grabbed) {
+      return adjustUI(total);
+    }
   };
   parse = function(bot, url) {
     var i, pack, packinfo, _i, _len, _ref;
@@ -38,8 +39,9 @@ parsePacklist = function() {
       packHash[url].push(packinfo);
     }
     infoHash[url].push(['Transferred', 'Slots', 'Queue', 'Idlequeue', 'Curr. Bandwidth', 'Uptime']);
-    infoHash[url].push([bot.transfer.total, bot.slots.min + '/' + bot.slots.max, bot.mainqueue.min + '/' + bot.mainqueue.max, bot.idlequeue.min + '/' + bot.idlequeue.max, bot.bandwidth.use, bot.uptime.current]);
-    return bottable.fnAddData([bot.nick]);
+    infoHash[url].push([bot.transfer.total, bot.slots.use + '/' + bot.slots.max, bot.mainqueue.use + '/' + bot.mainqueue.max, bot.idlequeue.use + '/' + bot.idlequeue.max, bot.bandwidth.use, bot.uptime.current]);
+    bottable.fnAddData([bot.nick]);
+    return fin();
   };
   fetch = function(url, cb) {
     return $.getJSON(url).always(function() {
@@ -137,7 +139,7 @@ $(document).ready(function() {
     'bFilter': false,
     'sDom': 'lrt',
     'bPaginate': false,
-    'bSort': false
+    'aaSorting': [[0, 'asc']]
   });
   parseBotlist([
     {

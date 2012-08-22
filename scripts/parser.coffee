@@ -1,16 +1,16 @@
 # expose functions and variables to interface.js
 packlistArr = []
 packHash = {}; infoHash = {}
-revhash = {}
+revhash = {};
 # dohoho bad coding standards
 datatable = 0; infotable = 0; bottable = 0;
 
 parsePacklist = () ->
   total = packlistArr.length
-  adjustUI total
   success = 0; fail = 0; grabbed = 0
-  parseinfo = (json) ->
-    infotable.fnAddData()
+  fin = () ->
+    if(total == grabbed)
+      adjustUI total
 
   parse = (bot, url) ->
     packHash[url] = []
@@ -23,13 +23,14 @@ parsePacklist = () ->
     infoHash[url].push ['Transferred','Slots','Queue','Idlequeue','Curr. Bandwidth','Uptime']
     infoHash[url].push [
       bot.transfer.total,
-      bot.slots.min+'/'+bot.slots.max,
-      bot.mainqueue.min+'/'+bot.mainqueue.max,
-      bot.idlequeue.min+'/'+bot.idlequeue.max,
+      bot.slots.use+'/'+bot.slots.max,
+      bot.mainqueue.use+'/'+bot.mainqueue.max,
+      bot.idlequeue.use+'/'+bot.idlequeue.max,
       bot.bandwidth.use,
       bot.uptime.current
     ]
     bottable.fnAddData [bot.nick]
+    fin()
 
   fetch = (url, cb) ->
     $.getJSON(url)
@@ -94,8 +95,8 @@ $(document).ready () ->
     'bFilter'   : true,
     'sDom'      : 'lrt',
     'bPaginate' : false,
-    'oSearch'   : { 'bRegex' : true }
-    'aaSorting' : [ [5,'asc'], [0,'asc'] ],
+    'oSearch'   : { 'bRegex' : true },
+    'aaSorting' : [[5,'asc'], [0,'asc']]
   }
 
   new FixedHeader datatable
@@ -104,14 +105,14 @@ $(document).ready () ->
     'bFilter'   : false,
     'sDom'      : 'lrt',
     'bPaginate' : false,
-    'bSort'     : false,
+    'bSort'     : false
   }
 
   bottable = $('#bottable').dataTable {
     'bFilter'   : false,
     'sDom'      : 'lrt',
     'bPaginate' : false,
-    'bSort'     : false,
+    'aaSorting' : [[0,'asc']]
   }
 
   parseBotlist [{loc: 'botlist.json', type: 'botlist'}]
