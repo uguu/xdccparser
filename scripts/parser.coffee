@@ -11,6 +11,7 @@ parsePacklist = () ->
   fin = () ->
     if(total == grabbed)
       adjustUI total
+      datatable.fnDraw()
 
   parse = (bot, url) ->
     packHash[url] = []
@@ -18,7 +19,7 @@ parsePacklist = () ->
     revhash[bot.nick] = url
     for pack,i in bot.packs
       packinfo = [i+1, pack.gets, pack.name, pack.size, pack.group, bot.nick]
-      datatable.fnAddData packinfo
+      datatable.fnAddData packinfo, false
       packHash[url].push packinfo
     infoHash[url].push ['Transferred','Slots','Queue','Idlequeue','Curr. Bandwidth','Uptime']
     infoHash[url].push [

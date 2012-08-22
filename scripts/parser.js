@@ -23,7 +23,8 @@ parsePacklist = function() {
   grabbed = 0;
   fin = function() {
     if (total === grabbed) {
-      return adjustUI(total);
+      adjustUI(total);
+      return datatable.fnDraw();
     }
   };
   parse = function(bot, url) {
@@ -35,7 +36,7 @@ parsePacklist = function() {
     for (i = _i = 0, _len = _ref.length; _i < _len; i = ++_i) {
       pack = _ref[i];
       packinfo = [i + 1, pack.gets, pack.name, pack.size, pack.group, bot.nick];
-      datatable.fnAddData(packinfo);
+      datatable.fnAddData(packinfo, false);
       packHash[url].push(packinfo);
     }
     infoHash[url].push(['Transferred', 'Slots', 'Queue', 'Idlequeue', 'Curr. Bandwidth', 'Uptime']);
