@@ -8,10 +8,11 @@ datatable = 0; infotable = 0; bottable = 0;
 parsePacklist = () ->
   total = packlistArr.length
   success = 0; fail = 0; grabbed = 0
+  $('#total').text total
+  $('#msg').text 'Collecting Packlists.'
   fin = () ->
     if(total == grabbed)
       adjustUI total
-      datatable.fnDraw()
 
   parse = (bot, url) ->
     packHash[url] = []
@@ -21,30 +22,29 @@ parsePacklist = () ->
       packinfo = [i+1, pack.gets, pack.name, pack.size, pack.group, bot.nick]
       datatable.fnAddData packinfo, false
       packHash[url].push packinfo
-    infoHash[url].push ['Transferred','Slots','Queue','Idlequeue','Curr. Bandwidth','Uptime']
+    infoHash[url].push ['Transferred','Open Slots','Queue','Idlequeue','Curr. Bandwidth','Uptime','Nick']
     infoHash[url].push [
       bot.transfer.total,
-      bot.slots.use+'/'+bot.slots.max,
+      (bot.slots.max-bot.slots.use)+'/'+bot.slots.max,
       bot.mainqueue.use+'/'+bot.mainqueue.max,
       bot.idlequeue.use+'/'+bot.idlequeue.max,
       bot.bandwidth.use,
-      bot.uptime.current
+      bot.uptime.current,
+      bot.nick
     ]
-    bottable.fnAddData [bot.nick]
-    fin()
+    bottable.fnAddData [bot.nick, bot.packsum], false
 
   fetch = (url, cb) ->
     $.getJSON(url)
+    .done (json) ->
+      onSuccess ++success
+      cb json, url if packHash[url] == undefined
+    .fail () ->
+      onFailure ++fail
     .always () ->
       grabbed++
       $('#processed').text i #no loop scope in JS
-    .done (json) ->
-      success++
-      $('#success').text success
-      cb json, url
-    .fail () ->
-      fail++
-      $('#fail').text fail
+      fin()
 
   for bot,i in packlistArr
     fetch bot, parse
@@ -52,44 +52,46 @@ parsePacklist = () ->
 
 parseBotlist = (botlistArr) ->
   grabbed = 0; success = 0; fail = 0
-  tograb = botlistArr.length
+  tograb = botlistArr.length; derp = {}
+  $('#total').text tograb
   fin = () ->
     if(tograb == grabbed)
       parsePacklist()
       #call the packlist parsing function
 
   parse = (json) ->
-    console.log json
     newgrab = 0
     for item in json
       console.log item.type+':'+item.loc
       switch item.type
         when "packlist"
+          console.log 'pushed '+item.loc
           packlistArr.push item.loc
         when "botlist"
-          botlistArr.push item
+          botlistArr.push item.loc
           tograb++
           newgrab++
+    console.log botlistArr
     for i in [0...newgrab]
-      fetch botlistArr[grabbed+i].loc, parse
-    fin()
+      fetch botlistArr[grabbed+i], parse
 
   fetch = (url, cb) ->
     $.getJSON(url)
-    .always (json) ->
+    .always () ->
       grabbed++
+    .done (json) ->
+      onSuccess ++success
+      cb json if derp[url] != true
+    .fail () ->
+      onFailure ++fail
+    .always () ->
       $('#processed').text grabbed
       $('#total').text tograb
-    .done (json) ->
-      success++
-      $('#success').text success
-      cb json
-    .fail () ->
-      fail++
-      $('#fail').text fail
+      derp[url] = true
+      fin()
 
   for i in [0...tograb]
-    fetch botlistArr[i].loc, parse
+    fetch botlistArr[i], parse
 
 $(document).ready () ->
   datatable = $('#packlisttable').dataTable {
@@ -116,5 +118,5 @@ $(document).ready () ->
     'aaSorting' : [[0,'asc']]
   }
 
-  parseBotlist [{loc: 'botlist.json', type: 'botlist'}]
+  parseBotlist ['botlist.json']
   datatable.fnAdjustColumnSizing()

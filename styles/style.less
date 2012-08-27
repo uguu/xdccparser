@@ -1,9 +1,9 @@
-@black: #000000;
-@hover: #444444;
-@darkg: #111111;
-@medg: #222222;
-@lightg: #333333;
-@white: #FFFFFF;
+@black: #000;
+@hover: #444;
+@darkg: #111;
+@medg: #222;
+@lightg: #333;
+@white: #FFF;
 
 html {
   font-family: 'Droid Sans', sans-serif;
@@ -16,10 +16,34 @@ body {
   margin: 0px;
 }
 
+#lodan {
+  position: absolute;
+  display: table;
+  height: 100%;
+  width: 100%;
+  background-color: black;
+  z-index: 9002;
+  p#status {
+    color: #AAA;
+    display: table-cell; 
+    vertical-align: middle; 
+    text-align: center;
+    font-size: 300%;
+    text-shadow: -1;
+    #success {
+      color: #2F2;
+    }
+    #fail {
+      color: #F44;
+    }
+  }
+}
+
 #sidebar {
   float: left;
   margin-left: -260px;
   width: 260px;
+  overflow: scroll;
   // background: red;
 }
 
@@ -41,19 +65,31 @@ body {
   position: relative;
   margin-top: -3px;
   margin-left: 7px;
-  height: 100%;
+  height: auto;
   width: 245px;
   h3 {
     border-bottom: 1px solid white;
   }
 }
 
+#allbots {
+  cursor: pointer;
+  *cursor: hand;
+}
+
 #info, #bots {
   position: relative;
+  overflow: scroll;
   #infotable, #bottable {
     border-spacing: 0;
     table-layout: auto;
     thead, th { display:none; }
+    .selected {
+      background-color: #223;
+      &:hover { background: @hover; }
+      &:hover td.sorting_1 { background: @hover; }
+    }
+    td:nth-child(2) { text-align: right; }
   }
 }
 
@@ -68,11 +104,26 @@ body {
     background: @black;
     table-layout: auto;
     float: left;
-    td {
-      padding: 3px 10px;
-      text-align: left;
-      &:nth-child(1), &:nth-child(2), &:nth-child(4) { text-align: right; }
-      &:nth-child(5), &:nth-child(6) { text-align: center; }
+    tr {
+      &.odd {
+        background: @darkg;
+        td.sorting_1 { background: @medg; }
+      }
+      &.even {
+        background: @medg;
+        td.sorting_1 { background: @lightg; }
+      }
+      &:last-child {
+        border-bottom-width: 2px;
+      }
+      &:hover { background: @hover; }
+      &:hover td.sorting_1 { background: @hover; }
+      td {
+        padding: 3px 10px;
+        text-align: left;
+        &:nth-child(1), &:nth-child(2), &:nth-child(4) { text-align: right; }
+        &:nth-child(5), &:nth-child(6) { text-align: center; }
+      }
     }
   }
 }
@@ -80,8 +131,8 @@ body {
 table {
   border-collapse: collapse;
   border: 0;
-  padding: 0;
-  margin: 0;
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
 }
 
 thead th {
@@ -106,11 +157,9 @@ h3 {
 tr {
   &.odd {
     background: @darkg;
-    td.sorting_1 { background: @medg; }
   }
   &.even {
     background: @medg;
-    td.sorting_1 { background: @lightg; }
   }
   &:last-child {
     border-bottom-width: 2px;

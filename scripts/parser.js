@@ -21,10 +21,11 @@ parsePacklist = function() {
   success = 0;
   fail = 0;
   grabbed = 0;
+  $('#total').text(total);
+  $('#msg').text('Collecting Packlists.');
   fin = function() {
     if (total === grabbed) {
-      adjustUI(total);
-      return datatable.fnDraw();
+      return adjustUI(total);
     }
   };
   parse = function(bot, url) {
@@ -39,22 +40,22 @@ parsePacklist = function() {
       datatable.fnAddData(packinfo, false);
       packHash[url].push(packinfo);
     }
-    infoHash[url].push(['Transferred', 'Slots', 'Queue', 'Idlequeue', 'Curr. Bandwidth', 'Uptime']);
-    infoHash[url].push([bot.transfer.total, bot.slots.use + '/' + bot.slots.max, bot.mainqueue.use + '/' + bot.mainqueue.max, bot.idlequeue.use + '/' + bot.idlequeue.max, bot.bandwidth.use, bot.uptime.current]);
-    bottable.fnAddData([bot.nick]);
-    return fin();
+    infoHash[url].push(['Transferred', 'Open Slots', 'Queue', 'Idlequeue', 'Curr. Bandwidth', 'Uptime', 'Nick']);
+    infoHash[url].push([bot.transfer.total, (bot.slots.max - bot.slots.use) + '/' + bot.slots.max, bot.mainqueue.use + '/' + bot.mainqueue.max, bot.idlequeue.use + '/' + bot.idlequeue.max, bot.bandwidth.use, bot.uptime.current, bot.nick]);
+    return bottable.fnAddData([bot.nick, bot.packsum], false);
   };
   fetch = function(url, cb) {
-    return $.getJSON(url).always(function() {
-      grabbed++;
-      return $('#processed').text(i);
-    }).done(function(json) {
-      success++;
-      $('#success').text(success);
-      return cb(json, url);
+    return $.getJSON(url).done(function(json) {
+      onSuccess(++success);
+      if (packHash[url] === void 0) {
+        return cb(json, url);
+      }
     }).fail(function() {
-      fail++;
-      return $('#fail').text(fail);
+      return onFailure(++fail);
+    }).always(function() {
+      grabbed++;
+      $('#processed').text(i);
+      return fin();
     });
   };
   _results = [];
@@ -66,55 +67,62 @@ parsePacklist = function() {
 };
 
 parseBotlist = function(botlistArr) {
-  var fail, fetch, fin, grabbed, i, parse, success, tograb, _i, _results;
+  var derp, fail, fetch, fin, grabbed, i, parse, success, tograb, _i, _results;
   grabbed = 0;
   success = 0;
   fail = 0;
   tograb = botlistArr.length;
+  derp = {};
+  $('#total').text(tograb);
   fin = function() {
     if (tograb === grabbed) {
       return parsePacklist();
     }
   };
   parse = function(json) {
-    var i, item, newgrab, _i, _j, _len;
-    console.log(json);
+    var i, item, newgrab, _i, _j, _len, _results;
     newgrab = 0;
     for (_i = 0, _len = json.length; _i < _len; _i++) {
       item = json[_i];
       console.log(item.type + ':' + item.loc);
       switch (item.type) {
         case "packlist":
+          console.log('pushed ' + item.loc);
           packlistArr.push(item.loc);
           break;
         case "botlist":
-          botlistArr.push(item);
+          botlistArr.push(item.loc);
           tograb++;
           newgrab++;
       }
     }
+    console.log(botlistArr);
+    _results = [];
     for (i = _j = 0; 0 <= newgrab ? _j < newgrab : _j > newgrab; i = 0 <= newgrab ? ++_j : --_j) {
-      fetch(botlistArr[grabbed + i].loc, parse);
+      _results.push(fetch(botlistArr[grabbed + i], parse));
     }
-    return fin();
+    return _results;
   };
   fetch = function(url, cb) {
-    return $.getJSON(url).always(function(json) {
-      grabbed++;
-      $('#processed').text(grabbed);
-      return $('#total').text(tograb);
+    return $.getJSON(url).always(function() {
+      return grabbed++;
     }).done(function(json) {
-      success++;
-      $('#success').text(success);
-      return cb(json);
+      onSuccess(++success);
+      if (derp[url] !== true) {
+        return cb(json);
+      }
     }).fail(function() {
-      fail++;
-      return $('#fail').text(fail);
+      return onFailure(++fail);
+    }).always(function() {
+      $('#processed').text(grabbed);
+      $('#total').text(tograb);
+      derp[url] = true;
+      return fin();
     });
   };
   _results = [];
   for (i = _i = 0; 0 <= tograb ? _i < tograb : _i > tograb; i = 0 <= tograb ? ++_i : --_i) {
-    _results.push(fetch(botlistArr[i].loc, parse));
+    _results.push(fetch(botlistArr[i], parse));
   }
   return _results;
 };
@@ -142,11 +150,6 @@ $(document).ready(function() {
     'bPaginate': false,
     'aaSorting': [[0, 'asc']]
   });
-  parseBotlist([
-    {
-      loc: 'botlist.json',
-      type: 'botlist'
-    }
-  ]);
+  parseBotlist(['botlist.json']);
   return datatable.fnAdjustColumnSizing();
 });
