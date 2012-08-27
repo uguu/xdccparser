@@ -16,7 +16,8 @@ adjustUI = function(numBots) {
     },
     'sName': 'user'
   });
-  bottable.fnAdjustColumnSizing();
+  bottable.fnDraw();
+  datatable.fnDraw();
   datatable.fnAdjustColumnSizing();
   return datatable.fnSettings().aoDrawCallback = [];
 };

@@ -11,7 +11,8 @@ adjustUI = (numBots) ->
       $('#lodan').fadeOut 600
     'sName': 'user'
   }
-  bottable.fnAdjustColumnSizing()
+  bottable.fnDraw()
+  datatable.fnDraw()
   datatable.fnAdjustColumnSizing()
   datatable.fnSettings().aoDrawCallback = []
 
