@@ -28,10 +28,10 @@ body {
     display: table-cell; 
     vertical-align: middle; 
     text-align: center;
+    text-shadow: 0 0 2px white;
     font-size: 300%;
-    text-shadow: -1;
     #success {
-      color: #2F2;
+      color: #2E2;
     }
     #fail {
       color: #F44;
@@ -73,6 +73,8 @@ body {
 }
 
 #allbots {
+  color: #BBB;
+  font-size: 90%;
   cursor: pointer;
   *cursor: hand;
 }
@@ -85,7 +87,9 @@ body {
     table-layout: auto;
     thead, th { display:none; }
     .selected {
-      background-color: #223;
+      border-bottom: 2px solid white;
+      border-top: 2px solid white;
+      background-color: #22222A;
       &:hover { background: @hover; }
       &:hover td.sorting_1 { background: @hover; }
     }
