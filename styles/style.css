@@ -1,0 +1,253 @@
+html {
+  font-family: 'Droid Sans', sans-serif;
+  font-size: 85%;
+  color: white;
+}
+
+body {
+  margin: 0;
+  background-color: #000000;
+}
+
+#lodan {
+  position: absolute;
+  z-index: 9002;
+  display: table;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+}
+
+#lodan p#status {
+  display: table-cell;
+  font-size: 300%;
+  color: #AAA;
+  text-align: center;
+  text-shadow: 0 0 2px white;
+  vertical-align: middle;
+}
+
+#lodan p#status #success {
+  color: #2E2;
+}
+
+#lodan p#status #fail {
+  color: #F44;
+}
+
+#sidebar {
+  float: left;
+  width: 260px;
+  margin-left: -260px;
+  overflow: scroll;
+}
+
+#search {
+  position: relative;
+  z-index: 9001;
+  width: 245px;
+  margin-top: 10px;
+  margin-left: 7px;
+}
+
+#search #searchbox {
+  width: 100%;
+  padding: 2px 2px 2px 2px;
+  font-size: 140%;
+  box-sizing: border-box;
+}
+
+#lists {
+  position: relative;
+  width: 245px;
+  height: auto;
+  margin-top: -3px;
+  margin-left: 7px;
+}
+
+#lists h3 {
+  border-bottom: 1px solid white;
+}
+
+#allbots {
+  font-size: 90%;
+  color: #BBB;
+  cursor: pointer;
+  *cursor: hand;
+}
+
+#info,
+#bots {
+  position: relative;
+  overflow: scroll;
+}
+
+#info #infotable,
+#bots #infotable,
+#info #bottable,
+#bots #bottable {
+  border-spacing: 0;
+  table-layout: auto;
+}
+
+#info #infotable thead,
+#bots #infotable thead,
+#info #bottable thead,
+#bots #bottable thead,
+#info #infotable th,
+#bots #infotable th,
+#info #bottable th,
+#bots #bottable th {
+  display: none;
+}
+
+#info #infotable .selected,
+#bots #infotable .selected,
+#info #bottable .selected,
+#bots #bottable .selected {
+  background-color: #22222A;
+  border-top: 2px solid white;
+  border-bottom: 2px solid white;
+}
+
+#info #infotable .selected:hover,
+#bots #infotable .selected:hover,
+#info #bottable .selected:hover,
+#bots #bottable .selected:hover {
+  background: #444444;
+}
+
+#info #infotable .selected:hover td.sorting_1,
+#bots #infotable .selected:hover td.sorting_1,
+#info #bottable .selected:hover td.sorting_1,
+#bots #bottable .selected:hover td.sorting_1 {
+  background: #444444;
+}
+
+#info #infotable td:nth-child(2),
+#bots #infotable td:nth-child(2),
+#info #bottable td:nth-child(2),
+#bots #bottable td:nth-child(2) {
+  text-align: right;
+}
+
+#packlist {
+  float: left;
+  height: 100%;
+  margin-right: 260px;
+  overflow: scroll;
+}
+
+#packlist #packlisttable {
+  float: left;
+  clear: both;
+  color: #ffffff;
+  background: #000000;
+  table-layout: auto;
+}
+
+#packlist #packlisttable tr.odd {
+  background: #111111;
+}
+
+#packlist #packlisttable tr.odd td.sorting_1 {
+  background: #222222;
+}
+
+#packlist #packlisttable tr.even {
+  background: #222222;
+}
+
+#packlist #packlisttable tr.even td.sorting_1 {
+  background: #333333;
+}
+
+#packlist #packlisttable tr:last-child {
+  border-bottom-width: 2px;
+}
+
+#packlist #packlisttable tr:hover {
+  background: #444444;
+}
+
+#packlist #packlisttable tr:hover td.sorting_1 {
+  background: #444444;
+}
+
+#packlist #packlisttable tr td {
+  padding: 3px 10px;
+  text-align: left;
+}
+
+#packlist #packlisttable tr td:nth-child(1),
+#packlist #packlisttable tr td:nth-child(2),
+#packlist #packlisttable tr td:nth-child(4) {
+  text-align: right;
+}
+
+#packlist #packlisttable tr td:nth-child(5),
+#packlist #packlisttable tr td:nth-child(6) {
+  text-align: center;
+}
+
+table {
+  padding: 0 0 0 0;
+  margin: 0 0 0 0;
+  border: 0;
+  border-collapse: collapse;
+}
+
+thead th {
+  padding: 10px 10px 10px 10px;
+  font-weight: bold;
+  color: white;
+  cursor: pointer;
+  *cursor: hand;
+  background-color: black;
+  border-bottom: 1px solid white;
+}
+
+h3 {
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+h3.head.toggleable {
+  cursor: pointer;
+  *cursor: hand;
+}
+
+tr.odd {
+  background: #111111;
+}
+
+tr.even {
+  background: #222222;
+}
+
+tr:last-child {
+  border-bottom-width: 2px;
+}
+
+tr:hover {
+  background: #444444;
+}
+
+tr:hover td.sorting_1 {
+  background: #444444;
+}
+
+td {
+  border: 0;
+}
+
+/*Images for displaying the sort directions*/
+
+#JABASCIRPT {
+  position: fixed;
+  width: 100%;
+  font-size: 400%;
+  color: #fff;
+  text-align: center;
+  background: #ff0000;
+}
