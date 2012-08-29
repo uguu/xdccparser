@@ -38,10 +38,12 @@ onFailure = (num) ->
 bof = 0
 reOff = () ->
   bof = $('#bots').offset()
-  console.log bof
   $('#bots').css 'height', window.innerHeight-bof.top
 
-$(document).ready () ->  
+copyPrompt = (str) ->
+  window.prompt 'Copy and paste this into your IRC client', str
+
+$(document).ready () ->
   $('#searchbox').focus()
 
   $('#searchbox').keyup () ->
@@ -49,7 +51,6 @@ $(document).ready () ->
     datatable.fnAdjustColumnSizing()
 
   bof = $('#bots').offset()
-  console.log bof
   $('#bots').css 'height', window.innerHeight-bof.top+16
   $('#packlist').css('height',window.innerHeight)
   $(window).resize () ->
@@ -59,12 +60,10 @@ $(document).ready () ->
   $('#packlisttable tbody').click (event) ->
     if event.target.parentNode.childNodes[5] == undefined
       botnick = Object.keys(revhash)[0]
-      console.log botnick
     else
       botnick = event.target.parentNode.childNodes[5].childNodes[0].nodeValue
     num = event.target.parentNode.childNodes[0].childNodes[0].nodeValue
-    str = '/msg ' + botnick + ' xdcc send ' + num
-    window.prompt 'Copy and paste this into your IRC client', str
+    copyPrompt('/msg ' + botnick + ' xdcc send ' + num)
 
   $('#bottable tbody').click (event) ->
     nick = event.target.parentNode.childNodes[0].childNodes[0].nodeValue

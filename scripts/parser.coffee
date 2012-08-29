@@ -62,16 +62,13 @@ parseBotlist = (botlistArr) ->
   parse = (json) ->
     newgrab = 0
     for item in json
-      console.log item.type+':'+item.loc
       switch item.type
         when "packlist"
-          console.log 'pushed '+item.loc
           packlistArr.push item.loc
         when "botlist"
           botlistArr.push item.loc
           tograb++
           newgrab++
-    console.log botlistArr
     for i in [0...newgrab]
       fetch botlistArr[grabbed+i], parse
 
