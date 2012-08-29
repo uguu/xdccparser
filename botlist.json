@@ -1,4 +1,4 @@
 [
-  { "loc":"botlist2.json", "type":"botlist"},
-  { "loc":"packlist.json", "type":"packlist" }
+  { "loc":"example.json", "type":"packlist" },
+  { "loc":"botlist.2.json", "type":"botlist" }
 ]
