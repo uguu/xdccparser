@@ -1,10 +1,28 @@
-This xdccparser is a packlist indexer for [iroffer-dinoex][irod] irc bots. It is similar to the more well known [php xdccparser][xdccp] or dinoex's own [iroffer-state][irod].
+### JSON XDCCParser ###
+#### About ####
+This is a packlist indexer for [iroffer-dinoex][irod] irc bots. It provides similar functionality to the more venerable [php xdccparser][xdccp] or Dinoex's own [iroffer-state][irod]: a searchable weblisting of one or more bot's packlists.
 
-The main difference from these is that it uses the client's browser to handle all of the data, rather than on the server. The main advantage of this is that it means a searchable packlisting can be provided without needing any special server setup.
+#### Requirements ####
+ - [Iroffer-Dinoex][irod], built with ruby support and http server.
+ - The RubyGem [JSON][rjson].
 
-That said, it requires a recent version of [iroffer-dinoex][irod] that has been built with ruby support.
+If your bot is hosted on a separate domain:
 
-Actual installation instructions to come.
+ - An http daemon that can handle CORS requests properly (Apache, nginx, and lighttpd will all work with a bit of configuration).
+
+#### [Setup and Installation][wiki] ###
+
+#### Too Much Information ####
+Similar to the discontinued [XDCC Parser Single][xdccp] mentioned above, this script fetches the bot's packlist on page load, rather than storing a cached version. However, it has several advantages over that:
+
+ - It doesn't require any server-side scripting whatsoever, only a normal http daemon.
+ - The packlisting it fetches is generated on request, meaning it's as up-to-date as possible.
+ - It natively supports single- or multi-bot setups, and automatically switches between the two.
+ - Distributed botlist files allow independently maintained lists of packlists on a single instance.
+ - Supports regular expression searches.
+ - Extremely simple configuration.
 
 [xdccp]: http://xdccparser.is-fabulo.us/
 [irod]: http://iroffer.dinoex.net/
+[rjson]: http://flori.github.com/json/
+[wiki]: https://github.com/uguu/xdccparser/wiki
