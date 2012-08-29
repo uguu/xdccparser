@@ -1,6 +1,6 @@
 ### JSON XDCCParser ###
 #### About ####
-This is a packlist indexer for [iroffer-dinoex][irod] irc bots. It provides similar functionality to the more venerable [php xdccparser][xdccp] or Dinoex's own [iroffer-state][irod]: a searchable weblisting of one or more bot's packlists.
+This is a packlist indexer for [iroffer-dinoex][irod] irc bots. It provides similar functionality to the more venerable [PHP XDCC Parser (Global|Single)][xdccp] or Dinoex's own [iroffer-state][irod]: a searchable weblisting of one or more bot's packlists.
 
 #### Requirements ####
  - [Iroffer-Dinoex][irod], built with ruby support and http server.
